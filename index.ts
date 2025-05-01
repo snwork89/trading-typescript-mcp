@@ -22,6 +22,20 @@ server.tool("Buy a Stock", {stock: z.string(),quantity: z.number()  }, (input) =
 })
 
 
+
+server.tool("Sell a Stock", {stock: z.string(),quantity: z.number()  }, (input) => {
+    const { stock, quantity } = input;
+    
+    placeOrder(stock, quantity, "SELL");
+    return {
+        content: [{
+            type: "text",
+            text: `Stock ${stock} sold for ${quantity} at ${new Date().toISOString()}`
+        }]
+    }
+})
+
+
 // Start receiving messages on stdin and sending messages on stdout
 const transport = new StdioServerTransport();
 await server.connect(transport);
